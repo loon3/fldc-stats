@@ -17,24 +17,24 @@ if (!file_exists($filename)) {
 	$i = 0;
 
 	//read folding data from file
-    do {
+    	do {
 	
 		$line=bzread($bz, 8092);
     
-    	if($line!==false) { 
+    		if($line!==false) { 
     		
-    		$data[$i] = $line;
+    			$data[$i] = $line;
     	
-    		$i++;
+    			$i++;
     		
+    		}
+    	
     	}
-    	
-    }
 	while($line);
     
 	bzclose($bz);
 
-    //write data as [TODAY].txt
+    	//write data as [TODAY].txt
 	file_put_contents("$filename", $data);
 
 	$data = null;
