@@ -1,17 +1,17 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-	<meta charset="utf-8">
-	<title>
-		FLDC Distribution Calculator
-	</title>
+<meta charset="utf-8">
+<title>
+	FLDC Distribution Calculator
+</title>
 	
-	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 	
-	<script type="text/javascript" language="Javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+<script type="text/javascript" language="Javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
 	
-	<script>
+<script>
 	
 	var getUrlParameter = function getUrlParameter(sParam) {
         var sPageURL = decodeURIComponent(window.location.search.substring(1)),
@@ -20,11 +20,11 @@
             i;
 
         for (i = 0; i < sURLVariables.length; i++) {
-            sParameterName = sURLVariables[i].split('=');
+        	sParameterName = sURLVariables[i].split('=');
 
-            if (sParameterName[0] === sParam) {
-                return sParameterName[1] === undefined ? true : sParameterName[1];
-            }
+        	if (sParameterName[0] === sParam) {
+                	return sParameterName[1] === undefined ? true : sParameterName[1];
+        	}
         }
 	};
 	
@@ -36,20 +36,20 @@
 	$( document ).ready(function() {
 		
 		$("#token").html(settoken);
-		
-        $( "#loadstats" ).click(function() {
+
+        	$( "#loadstats" ).click(function() {
 			
 			$("#stats").append("<thead><th>Address</th><th>" + endstats + "</th><th>"+ startstats + "</th><th>Difference</th></thead>");
 				
-            var endstatsdata = "getdata.php?date="+endstats;
-            var startstatsdata = "getdata.php?date="+startstats;
+            		var endstatsdata = "getdata.php?date="+endstats;
+            		var startstatsdata = "getdata.php?date="+startstats;
 			
-            $.getJSON(startstatsdata, function(startdata){
+            		$.getJSON(startstatsdata, function(startdata){
 			
 				startdata.sort(function(a, b){
-				    if(a.address < b.address) return -1;
-				    if(a.address > b.address) return 1;
-				    return 0;
+					if(a.address < b.address) return -1;
+					if(a.address > b.address) return 1;
+					return 0;
 				})
 			
 				var startaddresssort = new Array();
@@ -59,138 +59,136 @@
 					
 					var token = startdata[i]["token"]; 
             		
-            		if (token == "ALL" || token == settoken) {
+            				if (token == "ALL" || token == settoken) {
 		        		
-		        		startaddresssort.push(startdata[i]["address"]);
-		        		startamountsort.push(startdata[i]["newcredit"]);
+		        			startaddresssort.push(startdata[i]["address"]);
+		        			startamountsort.push(startdata[i]["newcredit"]);
 
-            		}
+            				}
 		        	
 				};
 				
 				var startresult = startaddresssort.reduce(function(res, n, i) {
 				    
-				    res[n] = (res[n] + +startamountsort[i]) || +startamountsort[i];
+					res[n] = (res[n] + +startamountsort[i]) || +startamountsort[i];
 				    
-				    return res;
+					return res;
 				    
 				}, {});
 				
 				console.log(startresult);
 			
-                $.getJSON(endstatsdata, function(data){
+                		$.getJSON(endstatsdata, function(data){
 				
-				    $("#csvcontainer").show();
+					$("#csvcontainer").show();
 				
-                    var totalcred = 0;
-                    var checkpercent = 0;
+                    			var totalcred = 0;
+                    			var checkpercent = 0;
 
-                    data.sort(function(a, b){
-                        if(a.address < b.address) return -1;
-                        if(a.address > b.address) return 1;
-                        return 0;
-                    })
+                    			data.sort(function(a, b){
+                        			if(a.address < b.address) return -1;
+                        			if(a.address > b.address) return 1;
+                        			return 0;
+                    			})
 
-                    var addresssort = new Array();
-                    var amountsort = new Array();
+                    			var addresssort = new Array();
+                    			var amountsort = new Array();
 
-                    for (var i = 0; i < data.length; i++) {
+                    			for (var i = 0; i < data.length; i++) {
 
-                        var token = data[i]["token"];  
-                        var newcredit = data[i]["newcredit"];  
+                        			var token = data[i]["token"];  
+                        			var newcredit = data[i]["newcredit"];  
 
-                //uncomment to enable FLDC distribution to all users        
-                //if (settoken != "FLDC") {
+                				//uncomment to enable FLDC distribution to all users        
+                				//if (settoken != "FLDC") {
 
-                        if (token == "ALL" || token == settoken) {
+                        			if (token == "ALL" || token == settoken) {
 
-                            totalcred += parseInt(newcredit);
+                            				totalcred += parseInt(newcredit);
 
-                            addresssort.push(data[i]["address"]);
-                            amountsort.push(data[i]["newcredit"]);
+                            				addresssort.push(data[i]["address"]);
+                            				amountsort.push(data[i]["newcredit"]);
 
-                        }
+                        			}
 
-                //} else {
+                				//} else {
 
-                    // totalcred += parseInt(newcredit);
+                    				// totalcred += parseInt(newcredit);
 
-                    // addresssort.push(data[i]["address"]);
-                    // amountsort.push(data[i]["newcredit"]);            			
-
-
-                //}
-
-                    };
-
-                    var result = addresssort.reduce(function(res, n, i) {
-
-                        res[n] = (res[n] + +amountsort[i]) || +amountsort[i];
-
-                        return res;
-
-                    }, {});
+                    				// addresssort.push(data[i]["address"]);
+                    				// amountsort.push(data[i]["newcredit"]);            			
 
 
-                    var totalcreditdiff = 0;
-                    var newdist = new Array();
+                				//}
+
+                    			};
+
+	                		var result = addresssort.reduce(function(res, n, i) {
+
+	                        		res[n] = (res[n] + +amountsort[i]) || +amountsort[i];
+
+	                        		return res;
+
+	                    		}, {});
+
+
+	                    		var totalcreditdiff = 0;
+	                    		var newdist = new Array();
 				
-				    for (var key in result) {
+					for (var key in result) {
 				 	
-                        var address = key;  
-                        var newcredit = result[key];  
+	                        		var address = key;  
+	                        		var newcredit = result[key];  
 
-                        if (typeof startresult[address] === 'undefined') {
-                            var oldcredit = 0;
-                        } else {
-                            var oldcredit = startresult[address];
-                        }
+	                        		if (typeof startresult[address] === 'undefined') {
+	                            			var oldcredit = 0;
+	                        		} else {
+	                            			var oldcredit = startresult[address];
+	                        		}
 
-                        var creditdiff = parseInt(newcredit) - parseInt(oldcredit);
+	                        		var creditdiff = parseInt(newcredit) - parseInt(oldcredit);
 
-                        totalcreditdiff += creditdiff;
+	                        		totalcreditdiff += creditdiff;
             		
-                        if (creditdiff > 0) {
-                            newdist.push({address: address, creditdiff: creditdiff})
-                        }
+	                        		if (creditdiff > 0) {
+	                            			newdist.push({address: address, creditdiff: creditdiff})
+	                        		}
 
-                        var percentofdist = (parseInt(newcredit) / totalcred) * 100;
+	                        		var percentofdist = (parseInt(newcredit) / totalcred) * 100;
 		        		
-		        		$("#stats").append("<tr><td>"+address+"</td><td>"+newcredit+"</td><td>"+oldcredit+"</td><td>"+creditdiff+"</td></tr>");
+			        		$("#stats").append("<tr><td>"+address+"</td><td>"+newcredit+"</td><td>"+oldcredit+"</td><td>"+creditdiff+"</td></tr>");
 		        				
-                        checkpercent = checkpercent + percentofdist;
+	                        		checkpercent = checkpercent + percentofdist;
 	        	
-				    };
+					};
 				 
-                    var totalpctnewdist = 0;
+	                    		var totalpctnewdist = 0;
 
-                    for (var i = 0; i < newdist.length; i++) {
+	                    		for (var i = 0; i < newdist.length; i++) {
                         
-                        var address = newdist[i]["address"];
-                        var percentofnewdist = (newdist[i]["creditdiff"] / totalcreditdiff) * tokenstodistribute;
-                        $("#csv").append(address + ", " + percentofnewdist.toFixed(8) + "<br />");
+	                        		var address = newdist[i]["address"];
+	                        		var percentofnewdist = (newdist[i]["creditdiff"] / totalcreditdiff) * tokenstodistribute;
+	                        		$("#csv").append(address + ", " + percentofnewdist.toFixed(8) + "<br />");
 
-                        totalpctnewdist += parseFloat(percentofnewdist * 100000000);
+	                        		totalpctnewdist += parseFloat(percentofnewdist * 100000000);
                         
-                    }
+	                    		}
 
-                    var viewpctnewdist = totalpctnewdist / 100000000;
+	                    		var viewpctnewdist = totalpctnewdist / 100000000;
 
-                    $("#totalpctnewdist").html(viewpctnewdist.toFixed(8));
+	                    		$("#totalpctnewdist").html(viewpctnewdist.toFixed(8));
 
-                    $("#statsoverview").html("Total Credits: "+totalcred);
-		       
-		        
-                }); 
+	                    		$("#statsoverview").html("Total Credits: "+totalcred);
+			       
+                		}); 
 		    
-            }); 
+            		}); 
 
+        	});
 		
-        });
-		
-    });	
+    	});	
         
-	</script>
+</script>
 
 </head>
 <body>
