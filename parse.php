@@ -14,8 +14,11 @@ if (mysqli_connect_errno()) {
     exit();
 }
 
-//create new table for daily stats
-$tablecreate = "CREATE TABLE `$day` LIKE `currenttest`";
+//create new table template for daily stats
+$tablecreate = "CREATE TABLE IF NOT EXISTS `template` ( `id` INT( 10 ) NOT NULL AUTO_INCREMENT PRIMARY KEY, `name` VARCHAR( 100 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL, `token` VARCHAR( 24 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL , `address` VARCHAR( 40 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL , `totalpts` VARCHAR( 20 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL)";
+
+//create new table for today's stats
+$tablecreate = "CREATE TABLE `$day` LIKE `template`";
 
 if ($mysqli->query($tablecreate) === TRUE) {
 		
@@ -89,7 +92,7 @@ if ($mysqli->query($tablecreate) === TRUE) {
         								echo $credit."<br>";
                                         
                                         //enter foldingcoin user information into database
-        								$tableentry = "INSERT INTO `fldc`.`$day` (`name`, `token`, `address`, `totalpts`) VALUES ('$fldcname','$token','$address','$credit')";
+        								$tableentry = "INSERT INTO `$dbname`.`$day` (`name`, `token`, `address`, `totalpts`) VALUES ('$fldcname','$token','$address','$credit')";
 
 										$mysqli->query($tableentry);
 								

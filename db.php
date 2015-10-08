@@ -4,6 +4,6 @@
 $dbserver = "";
 $dbuser = "";
 $dbpassword = "";
-$dbname = "fldcstats";
+$dbname = "";
 
 ?>
