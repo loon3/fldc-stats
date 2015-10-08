@@ -1,7 +1,7 @@
 # fldc-stats
 Foldingcoin Distribution Calculator
 
-___Instruction for download and parsing of daily Folding@home stats for Foldingcoin users:___
+___Instructions for downloading daily Folding@home stats and parsing for Foldingcoin users:___
 
 1.  Enter MySQL database credentials into db.php
 2.  Run download_parse.php daily @ 3am EST
