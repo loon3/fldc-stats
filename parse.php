@@ -72,7 +72,7 @@ if ($mysqli->query($tablecreate) === TRUE) {
 					if (count($namelinedata) == 3 || $namelinedata[0] == "---") {
                         
                         			//check if token indicated in username is valid
-						if($namelinedata[1] == "ALL" || $namelinedata[1] == "FLDC" || $namelinedata[1] == "OCTO" || $namelinedata[1] == "MAGICFLDC" || $namelinedata[1] == "SCOTCOIN"){
+						if($namelinedata[1] == "ALL" || $namelinedata[1] == "FLDC" || $namelinedata[1] == "OCTO" || $namelinedata[1] == "MAGICFLDC" || $namelinedata[1] == "SCOTCOIN" || $namelinedata[1] == "FANTOKEN"){
 					
         						$fldcname = $namelinedata[0];
         						$token = $namelinedata[1];
